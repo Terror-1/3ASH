@@ -11,11 +11,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',function(req,res){
   res.render('login')
 })
-app.get('/home',function(req,res){
-  res.render('home')
-});
+
 app.get('/boxing',function(req,res){
   res.render('boxing')
+});
+app.get('/home',function(req,res){
+  res.render('home')
 });
 app.get('/books',function(req,res){
   res.render('books')
@@ -50,5 +51,17 @@ app.get('/sun',function(req,res){
 app.get('/tennis',function(req,res){
   res.render('tennis')
 });
+app.post("/",function(req,res){
+    var username=req.body.username;
+    var password=req.body.password;
+    console.log(username);
+    console.log(password);
+    res.redirect('/home')
+  })
+ /* app.post("/home",function(req,res){
+    res.redirect('/searchresults')
+
+  })*/
+
 app.listen(3000);
 
