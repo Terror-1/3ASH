@@ -10,6 +10,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',function(req,res){
   res.render('login')
-})  
+}) 
+TextDecoderStream;
+
 app.listen(3000);
 
