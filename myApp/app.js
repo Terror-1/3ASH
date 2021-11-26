@@ -15,6 +15,8 @@ app.get('/',function(req,res){
   res.render('login')
 })
 
+
+
 app.get('/boxing',function(req,res){
   res.render('boxing')
 });
@@ -61,10 +63,12 @@ app.post("/",function(req,res){
     console.log(password);
     res.redirect('/home')
   })
-  app.post("/search",function(req,res){
-    res.redirect('/searchresults')
+app.post("/search",function(req,res){
+  var sear = req.body.Search;
 
-  })
+  console.log(sear);
+    res.redirect('/searchresults')
+})
 
 app.listen(3000);
 
