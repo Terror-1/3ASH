@@ -69,6 +69,7 @@ app.post("/search",function(req,res){
   items.forEach(element => {
     if (element.Itemname.includes(sear)){
       res.redirect('/'+element.itemvalue);
+      ///hi
 
     }
    console.log(element.Itemname);
