@@ -3,6 +3,8 @@ var fs = require ('fs');
 var path = require('path');
 var app = express();
 
+// data base of the items 
+//var items=(JSON.parse(fs.readFileSync('items.json')));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -59,10 +61,10 @@ app.post("/",function(req,res){
     console.log(password);
     res.redirect('/home')
   })
- /* app.post("/home",function(req,res){
+  app.post("/search",function(req,res){
     res.redirect('/searchresults')
 
-  })*/
+  })
 
 app.listen(3000);
 
