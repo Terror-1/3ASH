@@ -4,7 +4,8 @@ var path = require('path');
 var app = express();
 
 // data base of the items 
-//var items=(JSON.parse(fs.readFileSync('items.json')));
+var items=(JSON.parse(fs.readFileSync("items.json")));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -65,9 +66,14 @@ app.post("/",function(req,res){
   })
 app.post("/search",function(req,res){
   var sear = req.body.Search;
+  items.forEach(element => {
+    if (element.Itemname.includes(sear)){
+      res.redirect('/'+element.itemvalue);
 
-  console.log(sear);
-    res.redirect('/searchresults')
+    }
+   console.log(element.Itemname);
+    
+  });  
 })
 
 app.listen(3000);
