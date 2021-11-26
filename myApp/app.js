@@ -65,9 +65,9 @@ app.post("/",function(req,res){
     res.redirect('/home')
   })
 app.post("/search",function(req,res){
-  var sear = req.body.Search;
+  var searching = req.body.Search;
   items.forEach(element => {
-    if (element.Itemname.includes(sear)){
+    if (element.Itemname.toLowerCase.includes(searching)){
       res.redirect('/'+element.itemvalue);
       ///hi
 
