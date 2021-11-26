@@ -45,9 +45,25 @@ app.get('/phones',function(req,res){
 app.get('/registration',function(req,res){
   res.render('registration')
 });
+
+//Search field get-post
 app.get('/searchresults',function(req,res){
   res.render('searchresults')
 });
+app.post("/search",function(req,res){
+  var searching = (req.body.Search).toLowerCase;
+  items.forEach(element => {
+    if (element.Itemname.toLowerCase.includes(searching)){
+      res.redirect('/'+element.itemvalue);
+      ///hi
+
+    }
+   console.log(element.Itemname);
+    
+  });  
+})
+
+
 app.get('/sports',function(req,res){
   res.render('sports')
 });
@@ -64,18 +80,5 @@ app.post("/",function(req,res){
     console.log(password);
     res.redirect('/home')
   })
-app.post("/search",function(req,res){
-  var searching = req.body.Search;
-  items.forEach(element => {
-    if (element.Itemname.toLowerCase.includes(searching)){
-      res.redirect('/'+element.itemvalue);
-      ///hi
-
-    }
-   console.log(element.Itemname);
-    
-  });  
-})
-
 app.listen(3000);
 
