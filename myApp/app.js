@@ -51,12 +51,12 @@ app.get('/searchresults',function(req,res){
   res.render('searchresults')
 });
 app.post("/search",function(req,res){
-  var searching = (req.body.Search).toLowerCase;
+  var searching = (req.body.Search).toLowerCase();
   items.forEach(element => {
-    if (element.Itemname.toLowerCase.includes(searching)){
-      res.redirect('/'+element.itemvalue);
+    if (element.Itemname.toLowerCase().includes(searching)){
+      // res.redirect('/'+element.itemvalue);
       ///hi
-
+      res.redirect('searchresults');
     }
    console.log(element.Itemname);
     
