@@ -38,11 +38,12 @@
             </form>
         </div>
     </nav>
+    <h1> <%=message2%></h1>
     <ul>
-        <% for (var i = 0; i < list.length; i++) { %>
-        <% var index ='/'+list[i].itemvalue%>   
-        <li><a href = <%=index%>><%=list.Itemname%> </a></li>
-        <% } %>
+        <% searchresult.forEach(result => { %>
+        <% let index ='/'+result.itemvalue%>
+        <li><a href = <%=index%>><%=result.Itemname%> </a></li>
+        <% }); %>
     </ul>
 </body>
 </html>

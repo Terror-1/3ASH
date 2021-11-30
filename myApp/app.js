@@ -52,17 +52,13 @@ app.get('/searchresults',function(req,res){
 });
 app.post("/search",function(req,res){
   var searching = (req.body.Search).toLowerCase();
-  var searchresult=[];
-  items.forEach(element => {
-    if (element.Itemname.toLowerCase().includes(searching)){
-      // res.redirect('/'+element.itemvalue);
-      ///hi
-      searchresult.push(element);
-      //res.redirect('searchresults');
-    }
-   console.log(element.Itemname);
-    
-  })  
+  const searchresult = srch(searching);
+  if (searchresult.length===0){
+    res.render('searchresults',{searchresult:[], message2:"Item not found"})
+  }
+  else{
+  res.render('searchresults', {searchresult:searchresult, message2 : ""})
+}
 });
 
 
@@ -82,5 +78,16 @@ app.post("/",function(req,res){
     console.log(password);
     res.redirect('/home')
   })
-app.listen(3000);
 
+  //function search
+  function srch (text) {
+    var searchresult = [];
+    items.forEach(element => {
+      if (element.Itemname.toLowerCase().includes(text)){
+        searchresult.push(element);
+
+      }
+    })
+    return searchresult ;
+  }
+app.listen(3000);
