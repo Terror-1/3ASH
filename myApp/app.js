@@ -52,16 +52,18 @@ app.get('/searchresults',function(req,res){
 });
 app.post("/search",function(req,res){
   var searching = (req.body.Search).toLowerCase();
+  var searchresult=[];
   items.forEach(element => {
     if (element.Itemname.toLowerCase().includes(searching)){
       // res.redirect('/'+element.itemvalue);
       ///hi
-      res.redirect('searchresults');
+      searchresult.push(element);
+      //res.redirect('searchresults');
     }
    console.log(element.Itemname);
     
-  });  
-})
+  })  
+});
 
 
 app.get('/sports',function(req,res){

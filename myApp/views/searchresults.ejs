@@ -38,11 +38,11 @@
             </form>
         </div>
     </nav>
-    <ol>
-
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-      </ol>
+    <ul>
+        <% for (var i = 0; i < list.length; i++) { %>
+        <% var index ='/'+list[i].itemvalue%>   
+        <li><a href = <%=index%>><%=list.Itemname%> </a></li>
+        <% } %>
+    </ul>
 </body>
 </html>
