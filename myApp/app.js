@@ -2,7 +2,9 @@ var express = require('express');
 var fs = require ('fs');
 var path = require('path');
 var app = express();
-
+require ('dotenv/config');
+const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose')
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
 
@@ -16,8 +18,14 @@ app.get('/',function(req,res){
   res.render('login')
 })
 
-
-
+//CONNECT TO DB
+const uri = process.env.DB_CONNECTION;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  console.log('conncected')
+  client.close();
+});
 app.get('/boxing',function(req,res){
   res.render('boxing')
 });
