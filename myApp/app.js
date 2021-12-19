@@ -3,7 +3,6 @@ var fs = require ('fs');
 var path = require('path');
 var app = express();
 require ('dotenv/config');
-const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose')
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
@@ -19,13 +18,7 @@ app.get('/',function(req,res){
 })
 
 //CONNECT TO DB
-const uri = process.env.DB_CONNECTION;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  console.log('conncected')
-  client.close();
-});
+mongoose.connect('mongodb+srv://Hossam_Elfar:Hu456789@cluster0.7bxjq.mongodb.net/Data',{ useNewUrlParser: true, useUnifiedTopology: true }).then(console.log('connected'))
 app.get('/boxing',function(req,res){
   res.render('boxing')
 });
