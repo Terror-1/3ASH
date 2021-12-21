@@ -4,9 +4,28 @@ var path = require('path');
 var app = express();
 require ('dotenv/config');
 const mongoose = require('mongoose')
+const passport = require ('passport')
+const passportSetup = require ('./config/passport-setup')
+const session = require('express-session')
+const { flash } = require('express-flash-message');
+
+
+
+
+
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
 
+//session creation 
+app.use(session({
+   resave:false,
+   saveUninitialized:true,
+   secret:'lorem ipsum',
+   cookie : {maxAge : 6000 *15} 
+ }));
+//bring passport
+app.use(passport.initialize());
+app.use(passport.session());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -43,6 +62,13 @@ app.get('/leaves',function(req,res){
 app.get('/phones',function(req,res){
   res.render('phones')
 });
+///registration
+app.post('/register',
+  passport.authenticate('local.register', { 
+  successRedirect: '/registration',
+  failureRedirect: '/registration',
+  failureMessage : true })
+);
 app.get('/registration',function(req,res){
   res.render('registration')
 });
@@ -73,10 +99,7 @@ app.get('/tennis',function(req,res){
   res.render('tennis')
 });
 app.post("/",function(req,res){
-    var username=req.body.username;
-    var password=req.body.password;
-    console.log(username);
-    console.log(password);
+    console.log(req.body)
     res.redirect('/home')
   })
 
