@@ -4,30 +4,12 @@ var path = require('path');
 var app = express();
 const mongoose = require('mongoose')
 const User = require('./models/user')
-const passport = require ('passport')
-const passportSetup = require ('./config/passport-setup')
-const session = require('express-session')
-const { flash } = require('express-flash-message');
 const db = require ('./config/keys').MongoURI;
-const bcrypt = require('bcrypt-nodejs');
-
-
-
-
+const passport = require('passport');
 
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
 
-//session creation 
-app.use(session({
-   resave:false,
-   saveUninitialized:true,
-   secret:'lorem ipsum',
-   cookie : {maxAge : 6000 *15} 
- }));
-//bring passport
-app.use(passport.initialize());
-app.use(passport.session());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -68,7 +50,8 @@ app.get('/phones',function(req,res){
 });
 ///registration
 app.post('/register',(req ,res)=>{
-  const {username , password } = req.body;
+  const username = req.body.username;
+  const password = req.body.password
   let errors = [];
 
   if (!username || !password) {
@@ -78,7 +61,8 @@ app.post('/register',(req ,res)=>{
     res.render('registration', {
       errors
     });
-  } else {
+  } 
+  else {
     User.findOne({username:username}).then(user => {
       if (user) {
         errors.push({ msg: 'username already exists' });
@@ -87,11 +71,11 @@ app.post('/register',(req ,res)=>{
         });
       } else {
         const newUser = new User({
-          username,
-          password
+          username : username,
+          password:password
         });
-        console.log(newUser)
-        res.render('home')
+        newUser.save().then(console.log('User added'));
+        res.redirect('/')
       }
     });
   }
