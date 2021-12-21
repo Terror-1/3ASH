@@ -13,12 +13,12 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.methods.hashPassword= (Password )=>{
+/*userSchema.methods.hashPassword= (Password )=>{
     return bcrypt.hashSync(Password,bcrypt.genSaltSync(10))
 }
 userSchema.methods.comparePasswords = (Password , hash) =>
 {
     return bcrypt.compareSync(Password , hash)
-}
-const User = mongoose.model('User',userSchema,'users')
+}*/
+const User = mongoose.model('User',userSchema)
 module.exports = User

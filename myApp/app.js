@@ -2,12 +2,14 @@ var express = require('express');
 var fs = require ('fs');
 var path = require('path');
 var app = express();
-require ('dotenv/config');
 const mongoose = require('mongoose')
+const User = require('./models/user')
 const passport = require ('passport')
 const passportSetup = require ('./config/passport-setup')
 const session = require('express-session')
 const { flash } = require('express-flash-message');
+const db = require ('./config/keys').MongoURI;
+const bcrypt = require('bcrypt-nodejs');
 
 
 
@@ -37,7 +39,9 @@ app.get('/',function(req,res){
 })
 
 //CONNECT TO DB
-mongoose.connect('mongodb+srv://Hossam_Elfar:Hu456789@cluster0.7bxjq.mongodb.net/Data',{ useNewUrlParser: true, useUnifiedTopology: true }).then(console.log('connected'))
+mongoose.connect(db,{ useNewUrlParser: true, useUnifiedTopology: true }).then(console.log('Mongo DB connected'))
+
+
 app.get('/boxing',function(req,res){
   res.render('boxing')
 });
@@ -63,12 +67,38 @@ app.get('/phones',function(req,res){
   res.render('phones')
 });
 ///registration
-app.post('/register',
-  passport.authenticate('local.register', { 
-  successRedirect: '/registration',
-  failureRedirect: '/registration',
-  failureMessage : true })
-);
+app.post('/register',(req ,res)=>{
+  const {username , password } = req.body;
+  let errors = [];
+
+  if (!username || !password) {
+    errors.push({ msg: 'Please enter all fields' });
+  }
+  if (errors.length > 0) {
+    res.render('registration', {
+      errors
+    });
+  } else {
+    User.findOne({username:username}).then(user => {
+      if (user) {
+        errors.push({ msg: 'username already exists' });
+        res.render('registration', {
+          errors : errors
+        });
+      } else {
+        const newUser = new User({
+          username,
+          password
+        });
+        console.log(newUser)
+        res.render('home')
+      }
+    });
+  }
+});
+
+
+      
 app.get('/registration',function(req,res){
   res.render('registration')
 });
