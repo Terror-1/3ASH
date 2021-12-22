@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const User = require('./models/user')
 const db = require ('./config/keys').MongoURI;
 const passport = require('passport');
+//var popup = require('popups');
 
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',function(req,res){
-  res.render('login')
+  res.render('login',{loginfailed:"please enter username and password"})
 })
 
 //CONNECT TO DB
@@ -51,7 +52,7 @@ app.get('/phones',function(req,res){
 ///registration
 app.post('/register',(req ,res)=>{
   const username = req.body.username;
-  const password = req.body.password
+  const password = req.body.password;
   let errors = [];
 
   if (!username || !password) {
@@ -113,8 +114,34 @@ app.get('/tennis',function(req,res){
   res.render('tennis')
 });
 app.post("/",function(req,res){
-    console.log(req.body)
-    res.redirect('/home')
+    const username = req.body.username;
+    const password = req.body.password;
+    if(!username &&	!password){
+      
+      //console.log("please enter username and password");
+      res.render('login',{loginfailed:"please enter your username and password"});
+    }
+    else if (!username){
+      //console.log("please enter username");
+      res.render('login',{loginfailed:"loginfailed : you have not entered your username"});
+
+    }
+    else if(!password){
+     //console.log("please enter password");
+     res.render('login',{loginfailed:"loginfailed : you have not entered your password"});
+
+    }
+    
+    else {
+      const ans = User.findOne({username:username,password:password});
+      if(ans.username == null || ans.password == null){
+
+        res.render('login',{loginfailed:"loginfailed : incorrect username or password"});
+
+      }
+    }
+    //console.log(req.body);
+    //res.redirect('/home');
   })
 
   //function search
