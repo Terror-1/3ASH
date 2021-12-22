@@ -4,12 +4,14 @@ var path = require('path');
 var app = express();
 const mongoose = require('mongoose')
 const User = require('./models/user')
+const Cart = require('./models/cart')
 const db = require ('./config/keys').MongoURI;
 const passport = require('passport');
 //var popup = require('popups');
 
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
+var USER;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -136,7 +138,8 @@ app.post("/",function(req,res){
       User.findOne({username:username,password:password} , function (err, user) {
         if (user){
           res.redirect('/home');
-
+     //     USER = user.username;
+     //     console.log(USER)
         }
         else{
           res.render('login',{loginfailed:"loginfailed : incorrect username or password"});
@@ -145,7 +148,6 @@ app.post("/",function(req,res){
     });
   }
 });
-  
 
   //function search
   function srch (text) {
