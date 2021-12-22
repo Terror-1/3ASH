@@ -39,8 +39,10 @@
         </div>
     </nav>
     <ul>
-        <% searchresult.forEach(result => { %>
-        <li><%=result.Itemname%></li>
+        <%const resultArr = cartitems.filter((data,index)=>{%>
+        <%return cartitems.indexOf(data) === index;})%>
+        <%resultArr.forEach(result => { %>
+        <li><%=result%></li>
         <% }); %>
     </ul>
 </body>

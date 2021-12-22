@@ -5,7 +5,7 @@ var app = express();
 const mongoose = require('mongoose')
 const User = require('./models/user')
 const Cart = require('./models/cart')
-const db = require ('./config/keys').MongoURI;
+const db1 = require ('./config/keys').MongoURI;
 const passport = require('passport');
 var currentUser ;
 // data base of the items 
@@ -22,7 +22,8 @@ app.get('/',function(req,res){
 })
 
 //CONNECT TO DB
-mongoose.connect(db,{ useNewUrlParser: true, useUnifiedTopology: true }).then(console.log('Mongo DB connected'))
+mongoose.connect(db1,{ useNewUrlParser: true, useUnifiedTopology: true }).then(console.log('Mongo DB connected'))
+var db = mongoose.connection;
 
 
 app.get('/boxing',function(req,res){
@@ -49,12 +50,10 @@ app.get('/books',function(req,res){
   res.render('books')
 });
 app.get('/cart',function(req,res){
-  const query = { username: currentUser};
-  const pullDocument = {
-    $pull: { items: "Galaxy S21 Ultra" }
-  }
-  const array = Cart.findOne(query, pullDocument);
-  console.log(array);
+  db.collection("carts").find({username:currentUser}).toArray(function(err,result){
+    if (err)throw err;
+    res.render('cart',{cartitems:result[0].items})
+  })
 });
 app.get('/galaxy',function(req,res){
   res.render('galaxy',{message4:""})
