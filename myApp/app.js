@@ -4,13 +4,41 @@ var path = require('path');
 var app = express();
 const mongoose = require('mongoose')
 const User = require('./models/user')
-const Cart = require('./models/cart')
+var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
+const Cart = require('./models/cart');
 const db1 = require ('./config/keys').MongoURI;
 const passport = require('passport');
 var currentUser ;
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
+//session 
+const store = new MongoDBStore ({
+  uri :db1,
+  collection :'mySessions'
+}
+);
+app.use(session({
+  secret : 'this is secret key',
+  resave :false ,
+  saveuninitialized :false ,
+  store :store
 
+
+})
+
+
+)
+const isAuth = (req,res ,next)=>{
+  if (req.session.isAuth){
+    next();
+  }
+  else {
+
+  
+  res.redirect('/')}
+
+}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -26,7 +54,7 @@ mongoose.connect(db1,{ useNewUrlParser: true, useUnifiedTopology: true }).then(c
 var db = mongoose.connection;
 
 
-app.get('/boxing',function(req,res){
+app.get('/boxing',isAuth,function(req,res){
   res.render('boxing',{message4:""});
 });
 app.post('/boxing',function(req,res){
@@ -43,10 +71,10 @@ app.post('/boxing',function(req,res){
   });
   res.render('boxing',{message4:'Added to Cart Succesfully'})
 });
-app.get('/home',function(req,res){
+app.get('/home',isAuth,function(req,res){
   res.render('home')
 });
-app.get('/books',function(req,res){
+app.get('/books',isAuth,function(req,res){
   res.render('books')
 });
 app.get('/cart',function(req,res){
@@ -55,7 +83,7 @@ app.get('/cart',function(req,res){
     res.render('cart',{cartitems:result[0].items})
   })
 });
-app.get('/galaxy',function(req,res){
+app.get('/galaxy',isAuth,function(req,res){
   res.render('galaxy',{message4:""})
 });
 app.post('/galaxy',function(req,res){
@@ -72,7 +100,7 @@ app.post('/galaxy',function(req,res){
   });
   res.render('galaxy',{message4:'Added to Cart Succesfully'})
 });
-app.get('/iphone',function(req,res){
+app.get('/iphone',isAuth,function(req,res){
   res.render('iphone',{message4:""})
 });
 app.post('/iphone',function(req,res){
@@ -89,7 +117,7 @@ app.post('/iphone',function(req,res){
   });
   res.render('iphone',{message4:'Added to Cart Succesfully'})
 });
-app.get('/leaves',function(req,res){
+app.get('/leaves',isAuth,function(req,res){
   res.render('leaves',{message4:""})
 });
 app.post('/leaves',function(req,res){
@@ -106,7 +134,7 @@ app.post('/leaves',function(req,res){
   });
   res.render('leaves',{message4:'Added to Cart Succesfully'})
 });
-app.get('/phones',function(req,res){
+app.get('/phones',isAuth,function(req,res){
   res.render('phones')
 });
 ///registration
@@ -154,7 +182,7 @@ app.get('/registration',function(req,res){
 });
 
 //Search field get-post
-app.get('/searchresults',function(req,res){
+app.get('/searchresults',isAuth,function(req,res){
   res.render('searchresults')
 });
 app.post("/search",function(req,res){
@@ -169,10 +197,10 @@ app.post("/search",function(req,res){
 });
 
 
-app.get('/sports',function(req,res){
+app.get('/sports',isAuth,function(req,res){
   res.render('sports')
 });
-app.get('/sun',function(req,res){
+app.get('/sun',isAuth,function(req,res){
   res.render('sun',{message4:""})
 });
 app.post('/sun',function(req,res){
@@ -189,7 +217,7 @@ app.post('/sun',function(req,res){
   });
   res.render('sun',{message4:'Added to Cart Succesfully'})
 });
-app.get('/tennis',function(req,res){
+app.get('/tennis',isAuth,function(req,res){
   res.render('tennis',{message4:''})
 });
 app.post('/tennis',function(req,res){
@@ -229,6 +257,7 @@ app.post("/",function(req,res){
       User.findOne({username:username,password:password} , function (err, user) {
         if (user){
           currentUser = user.username;
+          req.session.isAuth= true ;
           res.redirect('/home');        }
         else{
           res.render('login',{loginfailed:"loginfailed : incorrect username or password"});
