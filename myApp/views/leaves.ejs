@@ -45,6 +45,12 @@
         #my {
             zoom: 110%;
         }
+        p{
+        font-family: "Lucida Console", "Courier New", monospace;
+         color: orange;
+         font-size: 20px;
+         font-weight: bold;
+         }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,9 +83,14 @@
     <div class="container2">
         A poetry collection by American poet Walt Whitman (1819–1892), each poem of which is loosely connected and represents the celebration of his philosophy of life and humanity.
     </div>
-    <div class="cart">
-        <button id="cart" class="btn btn-secondary ml-3">Add to Cart</button>
-    </div>
+    <form method="POST">
+        <div class="cart">
+            <button id="cart" class="btn btn-secondary ml-3">Add to Cart</button>
+            <br>
+            <br>
+            <br>
+            <p><%=message4%></p>
+        </form>
     <div class="video">
         <iframe width="480" height="360" src="https://www.youtube.com/embed/1k02HNJYmMc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
        </div>

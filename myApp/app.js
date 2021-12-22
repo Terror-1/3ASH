@@ -7,11 +7,9 @@ const User = require('./models/user')
 const Cart = require('./models/cart')
 const db = require ('./config/keys').MongoURI;
 const passport = require('passport');
-//var popup = require('popups');
-
+var currentUser ;
 // data base of the items 
 var items=(JSON.parse(fs.readFileSync("items.json")));
-var USER;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +26,21 @@ mongoose.connect(db,{ useNewUrlParser: true, useUnifiedTopology: true }).then(co
 
 
 app.get('/boxing',function(req,res){
-  res.render('boxing')
+  res.render('boxing',{message4:""});
+});
+app.post('/boxing',function(req,res){
+  const query = { username: currentUser};
+  const updateDocument = {
+  $push: { items: "Boxing Bag" }
+  };
+  const result =Cart.updateOne(query, updateDocument, function(err, res){
+    if(err)
+    console.log('err')
+    else {
+      console.log('Cart updated')
+    }
+  });
+  res.render('boxing',{message4:'Added to Cart Succesfully'})
 });
 app.get('/home',function(req,res){
   res.render('home')
@@ -37,16 +49,63 @@ app.get('/books',function(req,res){
   res.render('books')
 });
 app.get('/cart',function(req,res){
-  res.render('cart')
+  const query = { username: currentUser};
+  const pullDocument = {
+    $pull: { items: "Galaxy S21 Ultra" }
+  }
+  const array = Cart.findOne(query, pullDocument);
+  console.log(array);
 });
 app.get('/galaxy',function(req,res){
-  res.render('galaxy')
+  res.render('galaxy',{message4:""})
+});
+app.post('/galaxy',function(req,res){
+  const query = { username: currentUser};
+  const updateDocument = {
+  $push: { items: "Galaxy S21 Ultra" }
+  };
+  const result =Cart.updateOne(query, updateDocument, function(err, res){
+    if(err)
+    console.log('err')
+    else {
+      console.log('Cart Updated')
+    }
+  });
+  res.render('galaxy',{message4:'Added to Cart Succesfully'})
 });
 app.get('/iphone',function(req,res){
-  res.render('iphone')
+  res.render('iphone',{message4:""})
+});
+app.post('/iphone',function(req,res){
+  const query = { username: currentUser};
+  const updateDocument = {
+  $push: { items: "iPhone 13 Pro" }
+  };
+  const result =Cart.updateOne(query, updateDocument, function(err, res){
+    if(err)
+    console.log('err')
+    else {
+      console.log('Cart Updated')
+    }
+  });
+  res.render('iphone',{message4:'Added to Cart Succesfully'})
 });
 app.get('/leaves',function(req,res){
-  res.render('leaves')
+  res.render('leaves',{message4:""})
+});
+app.post('/leaves',function(req,res){
+  const query = { username: currentUser};
+  const updateDocument = {
+  $push: { items: "Leaves of Grass" }
+  };
+  const result =Cart.updateOne(query, updateDocument, function(err, res){
+    if(err)
+    console.log('err')
+    else {
+      console.log('Cart Updated')
+    }
+  });
+  res.render('leaves',{message4:'Added to Cart Succesfully'})
 });
 app.get('/phones',function(req,res){
   res.render('phones')
@@ -77,7 +136,12 @@ app.post('/register',(req ,res)=>{
           username : username,
           password:password
         });
+        const newCart = new Cart({
+          username :username,
+          items :[]
+        })
         newUser.save().then(console.log('User added'));
+        newCart.save().then(console.log('cart added'))
         res.redirect('/')
       }
     });
@@ -110,10 +174,38 @@ app.get('/sports',function(req,res){
   res.render('sports')
 });
 app.get('/sun',function(req,res){
-  res.render('sun')
+  res.render('sun',{message4:""})
+});
+app.post('/sun',function(req,res){
+  const query = { username: currentUser};
+  const updateDocument = {
+  $push: { items: "The sun and her flowers" }
+  };
+  const result =Cart.updateOne(query, updateDocument, function(err, res){
+    if(err)
+    console.log('err')
+    else {
+      console.log('Cart Updated')
+    }
+  });
+  res.render('sun',{message4:'Added to Cart Succesfully'})
 });
 app.get('/tennis',function(req,res){
-  res.render('tennis')
+  res.render('tennis',{message4:''})
+});
+app.post('/tennis',function(req,res){
+  const query = { username: currentUser};
+  const updateDocument = {
+  $push: { items: "Tennis Racket" }
+  };
+  const result =Cart.updateOne(query, updateDocument, function(err, res){
+    if(err)
+    console.log('err')
+    else {
+      console.log('Cart Updated')
+    }
+  });
+  res.render('tennis',{message4:'Added to Cart Succesfully'})
 });
 app.post("/",function(req,res){
     const username = req.body.username;
@@ -137,10 +229,8 @@ app.post("/",function(req,res){
     else {
       User.findOne({username:username,password:password} , function (err, user) {
         if (user){
-          res.redirect('/home');
-     //     USER = user.username;
-     //     console.log(USER)
-        }
+          currentUser = user.username;
+          res.redirect('/home');        }
         else{
           res.render('login',{loginfailed:"loginfailed : incorrect username or password"});
 

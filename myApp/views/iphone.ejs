@@ -44,6 +44,12 @@
         #my {
             zoom: 110%;
         }
+        p{
+        font-family: "Lucida Console", "Courier New", monospace;
+         color: orange;
+         font-size: 20px;
+         font-weight: bold;
+         }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,9 +81,14 @@
     <div class="container2">
         The iPhone 13 Pro and iPhone 13 Pro Max are smartphones designed and marketed by Apple Inc. They are the flagship smartphones in the fifteenth generation of the iPhone, succeeding the iPhone 12 Pro and iPhone 12 Pro Max.
     </div>
-    <div class="cart">
-        <button id="cart" class="btn btn-secondary ml-3">Add to Cart</button>
-    </div>
+    <form method="POST">
+        <div class="cart">
+            <button id="cart" class="btn btn-secondary ml-3">Add to Cart</button>
+            <br>
+            <br>
+            <br>
+            <p><%=message4%></p>
+        </form>
     <div class="video">
         <iframe width="480" height="360" src="https://www.youtube.com/embed/iff1MFtN8Ro" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
       </div>

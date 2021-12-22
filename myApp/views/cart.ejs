@@ -38,5 +38,10 @@
             </form>
         </div>
     </nav>
+    <ul>
+        <% searchresult.forEach(result => { %>
+        <li><%=result.Itemname%></li>
+        <% }); %>
+    </ul>
 </body>
 </html>
