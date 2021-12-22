@@ -176,7 +176,7 @@ app.post('/register',(req ,res)=>{
 });
 
 
-      
+   
 app.get('/registration',function(req,res){
   res.render('registration')
 });
@@ -278,6 +278,12 @@ app.post("/",function(req,res){
     })
     return searchresult ;
   }
+  app.post('/logout',(req,res)=>{
+    req.session.destroy((err)=>{
+      if(err) throw err;
+      res.redirect('/')
+    })
+  })  
 if(process.env.PORT){
   app.listen(procces.env.PORT,function(){console.log('Server Started')})
 }
