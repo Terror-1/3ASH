@@ -133,16 +133,21 @@ app.post("/",function(req,res){
     }
     
     else {
-      const ans = User.findOne({username:username,password:password});
-      if(ans.username == null || ans.password == null){
+      User.findOne({username:username,password:password} , function (err, user) {
+        if (user){
+          res.redirect('/home');
 
-        res.render('login',{loginfailed:"loginfailed : incorrect username or password"});
+        }
+        else{
+          res.render('login',{loginfailed:"loginfailed : incorrect username or password"});
 
-      }
-    }
+        }
+    });
+  }
+});
     //console.log(req.body);
     //res.redirect('/home');
-  })
+  
 
   //function search
   function srch (text) {
