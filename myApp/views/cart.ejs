@@ -13,6 +13,12 @@
             text-align: center;
             -webkit-text-stroke: 1px blue;
         }
+        p{
+        font-family: "Lucida Console", "Courier New", monospace;
+         color: orange;
+         font-size: 20px;
+         font-weight: bold;
+         }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,12 +44,10 @@
             </form>
         </div>
     </nav>
-    <ul>
         <%const resultArr = cartitems.filter((data,index)=>{%>
         <%return cartitems.indexOf(data) === index;})%>
         <%resultArr.forEach(result => { %>
-        <li><%=result%></li>
+        <p><%=result%></p>
         <% }); %>
-    </ul>
 </body>
 </html>
