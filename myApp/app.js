@@ -146,7 +146,6 @@ app.post("/",function(req,res){
   }
 });
     //console.log(req.body);
-    //res.redirect('/home');
   
 
   //function search
