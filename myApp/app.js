@@ -249,4 +249,9 @@ app.post("/",function(req,res){
     })
     return searchresult ;
   }
-app.listen(3000);
+if(process.env.PORT){
+  app.listen(procces.env.PORT,function(){console.log('Server Started')})
+}
+else {
+  app.listen(3000,function(){console.log('Server Started on port 3000')})
+}
