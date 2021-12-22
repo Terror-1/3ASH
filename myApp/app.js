@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/',function(req,res){
-  res.render('login',{loginfailed:"please enter username and password"})
+  res.render('login',{loginfailed:""})
 })
 
 //CONNECT TO DB
