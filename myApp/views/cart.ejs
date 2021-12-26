@@ -44,12 +44,8 @@
             </form>
         </div>
     </nav>
-        <%const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);%>
-        <%const resultArr = cartitems.filter((data,index)=>{%>
-        <%return cartitems.indexOf(data) === index;})%>
-        <%resultArr.forEach(result => { %>
-        <% let occ = countOccurrences(cartitems,result)  %>  
-        <p><%=result%> --->Quantity is <%=occ%></p>
+        <%cartitems.forEach(result => { %>
+        <p><%=result%></p>
         <% }); %>
 </body>
 </html>

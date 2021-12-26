@@ -60,6 +60,15 @@
 </head>
 
 <body>
+   <!--<script>
+        function show(){
+        const cartButton = document.querySelector('cart');
+        const paragraph = document.getElementById('.paragraph');
+        cartButton.addEventListener('click',()=>{
+            paragraph.style.visibility = 'visible';     
+        })
+    }
+    </script>--> 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
         <a class="navbar-brand" style="color: rgb(191, 255, 161)">Boxing Bag</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -84,11 +93,12 @@
     </div>
     <form method="POST">
     <div class="cart">
-        <button id="cart" class="btn btn-secondary ml-3">Add to Cart</button>
+        <button id="cart"  class="btn btn-secondary ml-3">Add to Cart</button>
         <br>
         <br>
         <br>
         <p><%=message4%></p>
+
     </form>
     </div>
     <div class="video">

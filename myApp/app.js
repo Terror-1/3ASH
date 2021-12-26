@@ -62,14 +62,23 @@ app.post('/boxing',function(req,res){
   const updateDocument = {
   $push: { items: "Boxing Bag" }
   };
-  const result =Cart.updateOne(query, updateDocument, function(err, res){
-    if(err)
-    console.log('err')
-    else {
-      console.log('Cart updated')
+  db.collection("carts").find({username:currentUser}).toArray(function(err,result){
+    if (err)throw err;
+    if (result[0].items.includes("Boxing Bag")){
+      res.render('boxing',{message4 : "item already exists"})
     }
-  });
-  res.render('boxing',{message4:'Added to Cart Succesfully'})
+    else{
+      const result =Cart.updateOne(query, updateDocument, function(err, res){
+        if(err)
+        console.log('err')
+        else {
+          console.log('Cart Updated')
+        }
+      });
+      res.render('boxing',{message4:'Added to Cart Succesfully'})
+
+    }
+  })
 });
 app.get('/home',isAuth,function(req,res){
   res.render('home')
@@ -91,14 +100,24 @@ app.post('/galaxy',function(req,res){
   const updateDocument = {
   $push: { items: "Galaxy S21 Ultra" }
   };
-  const result =Cart.updateOne(query, updateDocument, function(err, res){
-    if(err)
-    console.log('err')
-    else {
-      console.log('Cart Updated')
+  db.collection("carts").find({username:currentUser}).toArray(function(err,result){
+    if (err)throw err;
+    if (result[0].items.includes("Galaxy S21 Ultra")){
+      res.render('galaxy',{message4 : "item already exists"})
     }
-  });
-  res.render('galaxy',{message4:'Added to Cart Succesfully'})
+    else{
+      const result =Cart.updateOne(query, updateDocument, function(err, res){
+        if(err)
+        console.log('err')
+        else {
+          console.log('Cart Updated')
+        }
+      });
+      res.render('galaxy',{message4:'Added to Cart Succesfully'})
+
+    }
+  })
+
 });
 app.get('/iphone',isAuth,function(req,res){
   res.render('iphone',{message4:""})
@@ -108,14 +127,23 @@ app.post('/iphone',function(req,res){
   const updateDocument = {
   $push: { items: "iPhone 13 Pro" }
   };
-  const result =Cart.updateOne(query, updateDocument, function(err, res){
-    if(err)
-    console.log('err')
-    else {
-      console.log('Cart Updated')
+  db.collection("carts").find({username:currentUser}).toArray(function(err,result){
+    if (err)throw err;
+    if (result[0].items.includes("iPhone 13 Pro")){
+      res.render('iphone',{message4 :"item already exists" })
     }
-  });
-  res.render('iphone',{message4:'Added to Cart Succesfully'})
+    else{
+      const result =Cart.updateOne(query, updateDocument, function(err, res){
+        if(err)
+        console.log('err')
+        else {
+          console.log('Cart Updated')
+        }
+      });
+      res.render('iphone',{message4:'Added to Cart Succesfully'})
+
+    }
+  })
 });
 app.get('/leaves',isAuth,function(req,res){
   res.render('leaves',{message4:""})
@@ -125,14 +153,23 @@ app.post('/leaves',function(req,res){
   const updateDocument = {
   $push: { items: "Leaves of Grass" }
   };
-  const result =Cart.updateOne(query, updateDocument, function(err, res){
-    if(err)
-    console.log('err')
-    else {
-      console.log('Cart Updated')
+  db.collection("carts").find({username:currentUser}).toArray(function(err,result){
+    if (err)throw err;
+    if (result[0].items.includes("Leaves of Grass")){
+      res.render('leaves',{message4 : "item already exists"})
     }
-  });
-  res.render('leaves',{message4:'Added to Cart Succesfully'})
+    else{
+      const result =Cart.updateOne(query, updateDocument, function(err, res){
+        if(err)
+        console.log('err')
+        else {
+          console.log('Cart Updated')
+        }
+      });
+      res.render('leaves',{message4:'Added to Cart Succesfully'})
+
+    }
+  })
 });
 app.get('/phones',isAuth,function(req,res){
   res.render('phones')
@@ -208,14 +245,23 @@ app.post('/sun',function(req,res){
   const updateDocument = {
   $push: { items: "The sun and her flowers" }
   };
-  const result =Cart.updateOne(query, updateDocument, function(err, res){
-    if(err)
-    console.log('err')
-    else {
-      console.log('Cart Updated')
+  db.collection("carts").find({username:currentUser}).toArray(function(err,result){
+    if (err)throw err;
+    if (result[0].items.includes("The sun and her flowers")){
+      res.render('sun',{message4 : "item already exists"})
     }
-  });
-  res.render('sun',{message4:'Added to Cart Succesfully'})
+    else{
+      const result =Cart.updateOne(query, updateDocument, function(err, res){
+        if(err)
+        console.log('err')
+        else {
+          console.log('Cart Updated')
+        }
+      });
+      res.render('sun',{message4:'Added to Cart Succesfully'})
+
+    }
+  })
 });
 app.get('/tennis',isAuth,function(req,res){
   res.render('tennis',{message4:''})
@@ -225,14 +271,23 @@ app.post('/tennis',function(req,res){
   const updateDocument = {
   $push: { items: "Tennis Racket" }
   };
-  const result =Cart.updateOne(query, updateDocument, function(err, res){
-    if(err)
-    console.log('err')
-    else {
-      console.log('Cart Updated')
+  db.collection("carts").find({username:currentUser}).toArray(function(err,result){
+    if (err)throw err;
+    if (result[0].items.includes("Tennis Racket")){
+      res.render('tennis',{message4 : "item already exists"})
     }
-  });
-  res.render('tennis',{message4:'Added to Cart Succesfully'})
+    else{
+      const result =Cart.updateOne(query, updateDocument, function(err, res){
+        if(err)
+        console.log('err')
+        else {
+          console.log('Cart Updated')
+        }
+      });
+      res.render('tennis',{message4:'Added to Cart Succesfully'})
+
+    }
+  })
 });
 app.post("/",function(req,res){
     const username = req.body.username;
